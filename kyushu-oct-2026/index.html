@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kyushu — October 2026</title>
+<style>
+:root {
+  --bg: #F4F3F0;
+  --card: #FFFFFF;
+  --text: #1A1918;
+  --muted: #807C77;
+  --border: #E0DDD8;
+  --drive: #5C7A8A;
+  --walk: #4A7A69;
+  --train: #7A4A6A;
+  --alert-bg: #FEF5E8;
+  --alert-border: #EAC98A;
+  --alert-text: #7A5020;
+  --flight-bg: #EBF1F8;
+  --flight-border: #A8C0D8;
+  --flight-text: #2A4A68;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, system-ui, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding-bottom: env(safe-area-inset-bottom, 24px);
+  -webkit-text-size-adjust: 100%;
+}
+a { color: var(--walk); }
+a:visited { color: var(--walk); }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+.header { padding: 52px 20px 36px; max-width: 640px; margin: 0 auto; }
+.header-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.header-title { font-family: Georgia, serif; font-size: 42px; font-weight: normal; line-height: 1.05; color: var(--text); margin-bottom: 14px; }
+.header-meta { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* BOOKING CARD */
+.booking-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+.booking-card h3 { font-family: Georgia, serif; font-size: 15px; font-weight: normal; margin-bottom: 12px; }
+.booking-item { display: flex; gap: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.45; }
+.booking-item:last-child { margin-bottom: 0; }
+.book-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+.book-ok { background: #4A7A69; color: #fff; }
+.book-note { background: #A86730; color: #fff; }
+
+/* ALERTS */
+.alert { border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.45; margin-bottom: 20px; }
+.alert-warn { background: var(--alert-bg); border: 1px solid var(--alert-border); color: var(--alert-text); }
+.alert-train { background: var(--flight-bg); border: 1px solid var(--flight-border); color: var(--flight-text); }
+
+/* DAY */
+.day-divider { border: none; border-top: 1px solid var(--border); margin: 36px 0 28px; }
+.day-header { max-width: 640px; margin: 0 auto 20px; padding: 0 20px; }
+.day-date { font-family: Georgia, serif; font-size: 26px; font-weight: normal; color: var(--text); margin-bottom: 3px; }
+.day-subtitle { font-size: 13px; color: var(--muted); }
+
+/* STOPS */
+.stops { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+.stop { display: grid; grid-template-columns: 28px 1fr auto; gap: 0 14px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: start; }
+.stop:last-child { border-bottom: none; }
+.stop-num { font-family: Georgia, serif; font-size: 13px; color: var(--border); padding-top: 3px; }
+.stop-body { min-width: 0; }
+.stop-time { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 3px; text-transform: uppercase; }
+.stop-name { font-family: Georgia, serif; font-size: 18px; font-weight: normal; color: var(--text); margin-bottom: 2px; line-height: 1.2; }
+.stop-name a { color: inherit; text-decoration: none; }
+.stop-name a:hover { text-decoration: underline; }
+.stop-desc { font-size: 13px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
+.stop-note { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.stop-transport { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 3px; flex-shrink: 0; }
+.badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 3px; white-space: nowrap; }
+.badge-drive { background: var(--drive); color: #fff; }
+.badge-walk { background: var(--walk); color: #fff; }
+.badge-train { background: var(--train); color: #fff; }
+.transport-detail { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.3; }
+
+/* STOP MAP LINKS */
+.stop-maps { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.stop-map-link { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 3px; text-decoration: none; letter-spacing: 0.04em; border: 1px solid; }
+.sml-apple { color: var(--walk); border-color: var(--walk); background: transparent; }
+.sml-apple:visited { color: var(--walk); }
+.sml-kakao { color: #3A1D00; border-color: #CDB800; background: #FEF01B; }
+.sml-kakao:visited { color: #3A1D00; }
+
+/* MAP LINKS */
+.map-links { max-width: 640px; margin: 14px auto 0; padding: 0 20px; display: flex; gap: 10px; }
+.map-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; }
+.map-btn-apple { color: var(--walk); }
+.map-btn-apple:visited { color: var(--walk); }
+.map-btn-apple:hover { background: #F0F7F4; }
+.map-btn-kakao { color: #3A1D00; border-color: #F9E000; background: #FEF01B; }
+.map-btn-kakao:hover { background: #F5E000; }
+.map-btn-kakao:visited { color: #3A1D00; }
+
+/* RESORT CALLOUT */
+.resort-block { max-width: 640px; margin: 16px auto 0; padding: 0 20px; }
+.resort-inner { border-left: 3px solid var(--drive); padding: 12px 16px; background: var(--card); border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.resort-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--drive); margin-bottom: 5px; }
+.resort-name { font-family: Georgia, serif; font-size: 16px; font-weight: normal; color: var(--text); margin-bottom: 4px; }
+.resort-note { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+/* PRACTICAL */
+.practical { max-width: 640px; margin: 28px auto 60px; padding: 24px 20px 0; border-top: 1px solid var(--border); }
+.practical h3 { font-family: Georgia, serif; font-size: 16px; font-weight: normal; margin-bottom: 10px; color: var(--text); }
+.practical p { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 8px; }
+.practical p:last-child { margin-bottom: 0; }
+
+@media (max-width: 380px) {
+  .header-title { font-size: 34px; }
+  .day-date { font-size: 22px; }
+  .stop-name { font-size: 16px; }
+  .stop { grid-template-columns: 22px 1fr auto; gap: 0 10px; }
+  .map-links { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">Family trip · Leo, Isabelle, Paloma</div>
+  <h1 class="header-title">Kyushu<br>October 2026</h1>
+  <div class="header-meta">
+    Yufuin Baien Garden Resort · Wed 21 – Sat 24 Oct<br>
+    Toyota Raize · Fukuoka Airport → Hakata Station
+  </div>
+</div>
+
+<!-- BOOKINGS -->
+<div class="wrap" style="margin-bottom:32px;">
+  <div class="booking-card">
+    <h3>Bookings</h3>
+    <div class="booking-item">
+      <span class="book-tag book-ok">Confirmed</span>
+      <span><strong>Yufuin Baien Garden Resort</strong> — 3 nights, dinner and breakfast included. Booking #6214427998. Payment on arrival JPY 407,807. Phone: 050-3528-2940.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-ok">Confirmed</span>
+      <span><strong>Car hire</strong> — Toyota Raize, collect Fukuoka Airport 13:30 Wed 21 Oct. Return Hakata Station 11:00 Sat 24 Oct.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-ok">Confirmed</span>
+      <span><strong>Shinkansen</strong> — Hakata 13:36 → Tokyo Station 18:33, Sat 24 Oct. Standard class.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-note">Note</span>
+      <span><strong>Resort has no private bath</strong> — communal onsen facilities, gender separated. Standard ryokan setup.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-note">Note</span>
+      <span><strong>Cancellation</strong> — free until Tue 13 Oct. 10% from Wed 14 Oct, rising to 100% on arrival day.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ WEDNESDAY ═══ -->
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Wednesday 21 Oct</div>
+    <div class="day-subtitle">Arrive Fukuoka · drive to Yufuin</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">12:30</div>
+        <div class="stop-name">Land Fukuoka · collect car</div>
+        <div class="stop-desc">KE791 arrives Fukuoka Airport</div>
+        <div class="stop-note">Car hire desk at airport — collection 13:30. Toyota Raize, automatic, insurance inclusive. Fuel up before returning.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Fukuoka+Airport&ll=33.5859,130.4511">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Fukuoka Airport,33.5859,130.4511">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-drive">Drive</span>
+        <span class="transport-detail">depart ~13:30</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">~15:00</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Yufuin+Baien+Garden+Resort&ll=33.2620,131.3650">Yufuin Baien Garden Resort</a></div>
+        <div class="stop-desc">3 nights · check-in 16:00</div>
+        <div class="stop-note">Premium Kaiseki dinner included tonight. Bungo beef steak. Communal onsen. 2106-2 Kawakami, Yufuin-cho. Tel: 050-3528-2940.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Yufuin+Baien+Garden+Resort&ll=33.2620,131.3650">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Yufuin Baien Garden Resort,33.2620,131.3650">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-drive">Drive</span>
+        <span class="transport-detail">~1.5 hrs from<br>Fukuoka</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Fukuoka+Airport&daddr=Yufuin+Baien+Garden+Resort&dirflg=d" target="_blank">↗ Wednesday route — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Yufuin Baien Garden Resort,33.2620,131.3650" target="_blank">↗ Wednesday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- ═══ THURSDAY ═══ -->
+<hr class="day-divider">
+
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Thursday 22 Oct</div>
+    <div class="day-subtitle">Beppu day trip · back for dinner</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">Morning</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Beppu+Jigoku+Meguri&ll=33.2929,131.4989">Beppu — Jigoku Meguri</a></div>
+        <div class="stop-desc">The hell pools</div>
+        <div class="stop-note">Eight geothermal pools — vivid blues, reds, grey mud. Each dramatically different. Drive 45 min from Yufuin. Allow 2–3 hours to see the main ones. Umi Jigoku (cobalt blue) and Chi no Ike Jigoku (blood red) are the standouts.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Beppu+Jigoku&ll=33.2929,131.4989">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Beppu Jigoku,33.2929,131.4989">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-drive">Drive</span>
+        <span class="transport-detail">45 min from<br>Yufuin</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">Afternoon</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Beppu+Onsen&ll=33.2840,131.4910">Beppu town · onsen</div>
+        <div class="stop-desc">Steam city</div>
+        <div class="stop-note">The whole city steams visibly — pipes and vents everywhere. Try a public onsen or the famous sand baths (sunahara) where you're buried in geothermally heated sand. Very Paloma. Drive back to resort for dinner.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Beppu&ll=33.2840,131.4910">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Beppu,33.2840,131.4910">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">town centre</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resort-block">
+    <div class="resort-inner">
+      <div class="resort-label">Back for dinner</div>
+      <div class="resort-name">Drive back to Yufuin — 45 min</div>
+      <div class="resort-note">Kaiseki dinner included at resort. Leave Beppu by 17:00 to be comfortable.</div>
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Yufuin&daddr=Beppu+Jigoku&dirflg=d" target="_blank">↗ Thursday route — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Beppu Jigoku,33.2929,131.4989" target="_blank">↗ Thursday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- ═══ FRIDAY ═══ -->
+<hr class="day-divider">
+
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Friday 23 Oct</div>
+    <div class="day-subtitle">Yufuin — slow day</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">Morning</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Kinrin+Lake+Yufuin&ll=33.2594,131.3720">Kinrin Lake</a></div>
+        <div class="stop-desc">Misty morning lake</div>
+        <div class="stop-note">10 min walk from the resort. Best in the early morning when geothermal mist sits on the water. Hot spring water feeds into it — steams year-round. Very atmospheric in October light.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Kinrin+Lake+Yufuin&ll=33.2594,131.3720">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Kinrin Lake Yufuin,33.2594,131.3720">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">10 min from<br>resort</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">Mid-morning</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Yufuin+Floral+Village&ll=33.2608,131.3680">Yufuin town — galleries and shops</a></div>
+        <div class="stop-desc">The main street</div>
+        <div class="stop-note">Yufuin-cho Yunotsubo Kaido — the main shopping street. Small galleries, craft pottery, local glass, decent food. Completely unhurried. Good for Paloma to browse. Much quieter than Kyoto equivalent.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Yufuin+Yunotsubo+Kaido&ll=33.2608,131.3680">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Yufuin Yunotsubo Kaido,33.2608,131.3680">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">town centre</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">3</div>
+      <div class="stop-body">
+        <div class="stop-time">Afternoon</div>
+        <div class="stop-name">Resort · onsen · rest</div>
+        <div class="stop-desc">Last evening in Kyushu</div>
+        <div class="stop-note">Back to the resort. Communal onsen, unwind. Final kaiseki dinner. Early night — long drive and Shinkansen tomorrow.</div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">back to resort</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?q=Yufuin+Kinrin+Lake&ll=33.2594,131.3720" target="_blank">↗ Friday — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Kinrin Lake Yufuin,33.2594,131.3720" target="_blank">↗ Friday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- ═══ SATURDAY ═══ -->
+<hr class="day-divider">
+
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Saturday 24 Oct</div>
+    <div class="day-subtitle">Check out · drive to Hakata · Shinkansen to Tokyo</div>
+  </div>
+
+  <div class="wrap">
+    <div class="alert alert-train">🚄 &nbsp;Shinkansen 13:36 from Hakata — return car by 11:00, allow 1.5 hrs drive</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">Check out</div>
+        <div class="stop-name">Check out · pay at resort</div>
+        <div class="stop-desc">Payment on arrival JPY 407,807</div>
+        <div class="stop-note">Settle bill at resort. Cards may or may not be accepted — confirm with them on arrival. Have yen as backup. Leave by 09:00 to be comfortable.</div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-drive">Drive</span>
+        <span class="transport-detail">depart ~09:00</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">11:00</div>
+        <div class="stop-name"><a href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Return car · Hakata Station</a></div>
+        <div class="stop-desc">Hakata exit</div>
+        <div class="stop-note">Return by 11:00 at the Hakata Railway Station Hakata exit. Fuel up within 5km first. One-way drop-off fee JPY 1,210 payable locally. Keep the fuel receipt.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Hakata Station,33.5899,130.4208">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-drive">Drive</span>
+        <span class="transport-detail">~1.5 hrs from<br>Yufuin</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">3</div>
+      <div class="stop-body">
+        <div class="stop-time">13:36</div>
+        <div class="stop-name">Shinkansen · Hakata → Tokyo</div>
+        <div class="stop-desc">Nozomi · Standard class</div>
+        <div class="stop-note">Hakata 13:36 → Tokyo Station 18:33. Mt Fuji on the right side heading east if clear. Park Hyatt check-in from 15:00 — rooms will be held.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Hakata Station</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-train">Train</span>
+        <span class="transport-detail">4h 57m<br>to Tokyo</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PRACTICAL -->
+<div class="practical">
+  <h3>Driving in Japan</h3>
+  <p><strong>Left-hand drive</strong> — same side as the UK, so no surprises there.</p>
+  <p><strong>ETC card</strong> — if the hire car has one, use it for toll roads (faster lanes). If not, keep small change for toll booths.</p>
+  <p><strong>Google Maps or Apple Maps</strong> — both work well in Japan. Download the Yufuin area offline before you leave Fukuoka in case signal is patchy in the mountains.</p>
+  <p><strong>Fuel</strong> — return the car full. Fuel up within 5km of Hakata Station before drop-off. Keep the receipt.</p>
+  <p><strong>Resort payment</strong> — JPY 407,807 due on arrival. Confirm card acceptance with the resort beforehand; have yen as backup.</p>
+</div>
+
+</body>
+</html>
