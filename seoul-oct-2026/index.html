@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seoul — October 2026</title>
+<style>
+:root {
+  --bg: #F4F3F0;
+  --card: #FFFFFF;
+  --text: #1A1918;
+  --muted: #807C77;
+  --border: #E0DDD8;
+  --walk: #4A7A69;
+  --taxi: #A86730;
+  --alert-bg: #FEF5E8;
+  --alert-border: #EAC98A;
+  --alert-text: #7A5020;
+  --flight-bg: #EBF1F8;
+  --flight-border: #A8C0D8;
+  --flight-text: #2A4A68;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, system-ui, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding-bottom: env(safe-area-inset-bottom, 24px);
+  -webkit-text-size-adjust: 100%;
+}
+a { color: var(--walk); }
+a:visited { color: var(--walk); }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+.header { padding: 52px 20px 36px; max-width: 640px; margin: 0 auto; }
+.header-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.header-title { font-family: Georgia, serif; font-size: 42px; font-weight: normal; line-height: 1.05; color: var(--text); margin-bottom: 14px; }
+.header-meta { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ARRIVAL */
+.arrival-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+.arrival-card h3 { font-family: Georgia, serif; font-size: 15px; font-weight: normal; margin-bottom: 10px; }
+.arrival-row { display: flex; gap: 12px; margin-bottom: 8px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.arrival-row:last-child { margin-bottom: 0; }
+.arrival-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--walk); min-width: 56px; padding-top: 1px; flex-shrink: 0; }
+
+/* ALERTS */
+.alert { border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.45; margin-bottom: 20px; }
+.alert-sunset { background: var(--alert-bg); border: 1px solid var(--alert-border); color: var(--alert-text); }
+.alert-flight { background: var(--flight-bg); border: 1px solid var(--flight-border); color: var(--flight-text); }
+
+/* DAY */
+.day { margin-bottom: 0; }
+.day-divider { border: none; border-top: 1px solid var(--border); margin: 36px 0 28px; }
+.day-header { max-width: 640px; margin: 0 auto 20px; padding: 0 20px; }
+.day-date { font-family: Georgia, serif; font-size: 26px; font-weight: normal; color: var(--text); margin-bottom: 3px; }
+.day-subtitle { font-size: 13px; color: var(--muted); }
+
+/* STOPS */
+.stops { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+.stop { display: grid; grid-template-columns: 28px 1fr auto; gap: 0 14px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: start; }
+.stop:last-child { border-bottom: none; }
+.stop-num { font-family: Georgia, serif; font-size: 13px; color: var(--border); padding-top: 3px; }
+.stop-body { min-width: 0; }
+.stop-time { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 3px; text-transform: uppercase; }
+.stop-name { font-family: Georgia, serif; font-size: 18px; font-weight: normal; color: var(--text); margin-bottom: 2px; line-height: 1.2; }
+.stop-name a { color: inherit; text-decoration: none; }
+.stop-name a:hover { text-decoration: underline; }
+.stop-desc { font-size: 13px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
+.stop-note { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.stop-transport { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 3px; flex-shrink: 0; }
+.badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 3px; white-space: nowrap; }
+.badge-walk { background: var(--walk); color: #fff; }
+.badge-taxi { background: var(--taxi); color: #fff; }
+.badge-work { background: #1A1918; color: #fff; }
+.transport-detail { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.3; }
+
+/* MAP LINKS */
+.map-links { max-width: 640px; margin: 14px auto 0; padding: 0 20px; display: flex; gap: 10px; }
+.map-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; }
+.map-btn:visited { color: var(--walk); }
+.map-btn-apple { color: var(--walk); }
+.map-btn-apple:hover { background: #F0F7F4; }
+
+.map-btn-kakao:hover { background: #F5E000; }
+.map-btn-kakao:visited { color: #3A1D00; }
+
+/* STOP MAP LINKS */
+.stop-maps { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.stop-map-link { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 3px; text-decoration: none; letter-spacing: 0.04em; border: 1px solid; }
+.sml-apple { color: var(--walk); border-color: var(--walk); background: transparent; }
+.sml-apple:visited { color: var(--walk); }
+.sml-kakao { color: #3A1D00; border-color: #CDB800; background: #FEF01B; }
+.sml-kakao:visited { color: #3A1D00; }
+
+/* DINNER */
+.dinner-block { max-width: 640px; margin: 16px auto 0; padding: 0 20px; }
+.dinner-inner { border-left: 3px solid var(--walk); padding: 12px 16px; background: var(--card); border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.dinner-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--walk); margin-bottom: 5px; }
+.dinner-name { font-family: Georgia, serif; font-size: 16px; font-weight: normal; color: var(--text); margin-bottom: 4px; }
+.dinner-note { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+/* BOOKING CHECKLIST */
+.booking-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+.booking-card h3 { font-family: Georgia, serif; font-size: 15px; font-weight: normal; margin-bottom: 12px; }
+.booking-item { display: flex; gap: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.45; }
+.booking-item:last-child { margin-bottom: 0; }
+.book-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+.book-now { background: #C0392B; color: #fff; }
+.book-ok { background: var(--walk); color: #fff; }
+.book-do { background: var(--taxi); color: #fff; }
+
+/* PRACTICAL */
+.practical { max-width: 640px; margin: 28px auto 60px; padding: 24px 20px 0; border-top: 1px solid var(--border); }
+.practical h3 { font-family: Georgia, serif; font-size: 16px; font-weight: normal; margin-bottom: 10px; color: var(--text); }
+.practical p { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 8px; }
+.practical p:last-child { margin-bottom: 0; }
+
+@media (max-width: 380px) {
+  .header-title { font-size: 34px; }
+  .day-date { font-size: 22px; }
+  .stop-name { font-size: 16px; }
+  .stop { grid-template-columns: 22px 1fr auto; gap: 0 10px; }
+  .map-links { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">Family trip · Leo, Isabelle, Paloma</div>
+  <h1 class="header-title">Seoul<br>October 2026</h1>
+  <div class="header-meta">
+    Grand Hyatt Seoul, Hannam-dong<br>
+    Sun 18 – Tue 20 Oct · fly to Fukuoka Wed 21 Oct 11:05
+  </div>
+</div>
+
+<!-- BOOKING CHECKLIST -->
+<div class="wrap" style="margin-bottom:32px;">
+  <div class="booking-card">
+    <h3>Bookings</h3>
+    <div class="booking-item">
+      <span class="book-tag book-ok">Confirmed</span>
+      <span><strong>Parc, Hannam-dong</strong> — Sunday dinner.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-do">Sent</span>
+      <span><strong>Maple Tree House</strong> — Monday lunch, midday, 3 guests. Awaiting confirmation.</span>
+    </div>
+    <div class="booking-item">
+      <span class="book-tag book-ok">Not needed</span>
+      <span><strong>K-ETA</strong> — UK passports exempt until 31 Dec 2026.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ SUNDAY ═══ -->
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Sunday 18 Oct</div>
+    <div class="day-subtitle">Arrival day · afternoon out</div>
+  </div>
+
+  <div class="wrap">
+    <div class="arrival-card">
+      <h3>Getting in from Incheon</h3>
+      <div class="arrival-row">
+        <span class="arrival-label">Option A</span>
+        <span>AREX express T2 → Seoul Station (43 min, ₩9,500) then taxi to Grand Hyatt (~20 min, ~₩12,000). Total ~1hr 10min.</span>
+      </div>
+      <div class="arrival-row">
+        <span class="arrival-label">Option B</span>
+        <span>Direct taxi from airport to hotel: ~70 min, ~₩80,000–90,000. Recommended with luggage and three of you.</span>
+      </div>
+      <div class="arrival-row">
+        <span class="arrival-label">Hotel</span>
+        <span>Room from 15:00. Grand Club lounge for early arrival. Expect to be settled by 13:00–14:00.</span>
+      </div>
+    </div>
+    <div class="alert alert-sunset">🌇 &nbsp;Sunset 17:51 — plan to be walking back by 17:15</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">~14:00</div>
+        <div class="stop-name">Leeum Museum of Art</div>
+        <div class="stop-desc">World-class art museum</div>
+        <div class="stop-note">Three buildings by Botta, Nouvel and Koolhaas. Korean traditional and contemporary collection. Last entry 17:30. Allow 1.5 hours. Open Tue–Sun.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Leeum+Museum+of+Art&ll=37.538718,127.004485">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Leeum Museum,37.538718,127.004485">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">15 min<br>downhill</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">~15:30</div>
+        <div class="stop-name">Gallery strip, Hannam-dong</div>
+        <div class="stop-desc">International galleries</div>
+        <div class="stop-note">Pace Gallery · Thaddaeus Ropac · Lehmann Maupin. All within 5–10 min walk of Leeum. 30–40 min total.
+        </div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Pace+Gallery+Seoul&ll=37.5385,127.0048">Pace — Apple</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Pace Gallery Seoul,37.5385,127.0048">Pace — Kakao</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">5–10 min</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">3</div>
+      <div class="stop-body">
+        <div class="stop-time">~16:15</div>
+        <div class="stop-name">Hannam-dong wander</div>
+        <div class="stop-desc">Seoul's design neighbourhood</div>
+        <div class="stop-note">IISE, Ader Error, Noksapyeong restaurant strip. Independent Korean menswear and concept stores. Head downhill toward Hangangjin. Back before sunset.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Hannam-dong+Seoul&ll=37.5360,127.0030">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Hannam-dong,37.5360,127.0030">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">wander</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dinner-block">
+    <div class="dinner-inner">
+      <div class="dinner-label">Sunday dinner — book ahead</div>
+      <div class="dinner-name">Parc, Hannam-dong — Korean home cooking</div>
+      <div class="dinner-note">5 min walk from Grand Hyatt · menu updated weekly · 26-5 Itaewon-ro 55ga-gil · casual, no ceremony</div>
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Leeum+Museum+Seoul&dirflg=w" target="_blank">↗ Sunday route — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Leeum Museum,37.538718,127.004485" target="_blank">↗ Sunday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- ═══ MONDAY ═══ -->
+<hr class="day-divider">
+
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Monday 19 Oct</div>
+    <div class="day-subtitle">Palaces · Zaha Hadid · food market</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">09:00</div>
+        <div class="stop-name">Gyeongbokgung Palace</div>
+        <div class="stop-desc">The main palace</div>
+        <div class="stop-note">No pre-booking — pay at gate ₩3,000. Opens 9am. Allow 1.5 hrs. Closed Tuesdays, so Monday is essential. Royal guard ceremony at 10:00 worth timing for.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Gyeongbokgung+Palace&ll=37.579617,126.977041">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Gyeongbokgung Palace,37.579617,126.977041">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-taxi">Taxi</span>
+        <span class="transport-detail">~20 min<br>~₩13,000</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">10:30</div>
+        <div class="stop-name">Bukchon Hanok Village</div>
+        <div class="stop-desc">Old hanok alleyways</div>
+        <div class="stop-note">12 min walk uphill from the palace north gate. Quiet residential streets. ~1 hour — the extra time before midday lunch means no rush. Grab a coffee in Samcheong-dong on the way down.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Bukchon+Hanok+Village&ll=37.5814696,126.9849519">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Bukchon Hanok Village,37.5814696,126.9849519">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">12 min<br>uphill</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">3</div>
+      <div class="stop-body">
+        <div class="stop-time">12:00</div>
+        <div class="stop-name">Maple Tree House</div>
+        <div class="stop-desc">Korean BBQ lunch — book ahead</div>
+        <div class="stop-note">5 min walk from Bukchon. Hanwoo beef, staff cook at the table. Reservation at midday. <strong>Book ahead: +82 2-730-7461</strong>. Allow 1.5 hrs. Lunch service ends 15:00.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Maple+Tree+House&ll=37.5868513,126.9819790">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Maple Tree House Samcheong,37.5868513,126.9819790">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">5 min</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">4</div>
+      <div class="stop-body">
+        <div class="stop-time">14:00</div>
+        <div class="stop-name">Dongdaemun Design Plaza</div>
+        <div class="stop-desc">Zaha Hadid building</div>
+        <div class="stop-note">Fluid concrete, no right angles. Walk the outside first, then in. 45 min is enough — the architecture is the point.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Dongdaemun+Design+Plaza&ll=37.5670135,126.9983701">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Dongdaemun Design Plaza,37.5670135,126.9983701">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-taxi">Taxi</span>
+        <span class="transport-detail">~15 min<br>~₩10,000</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">5</div>
+      <div class="stop-body">
+        <div class="stop-time">15:00</div>
+        <div class="stop-name">Gwangjang Market</div>
+        <div class="stop-desc">Seoul's oldest covered food market</div>
+        <div class="stop-note">10 min walk from DDP. Bindaetteok (mung bean pancakes), mayak gimbap, raw fish. Very local, no ceremony. Browse and snack — afternoon wind-down.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Gwangjang+Market+Seoul&ll=37.5700,127.0090">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Gwangjang Market,37.5700,127.0090">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">10 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="margin-top:16px;">
+    <div style="font-size:13px;color:var(--muted);padding:14px 0;border-top:1px solid var(--border);">
+      Taxi home from Gwangjang to Grand Hyatt: ~20 min, ~₩14,000.
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Gyeongbokgung+Palace+Seoul&dirflg=d" target="_blank">↗ Monday route — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Gyeongbokgung Palace,37.579617,126.977041" target="_blank">↗ Monday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- ═══ TUESDAY ═══ -->
+<hr class="day-divider">
+
+<div class="day">
+  <div class="day-header wrap">
+    <div class="day-date">Tuesday 20 Oct</div>
+    <div class="day-subtitle">Art · thrift · Gangnam · Savannah</div>
+  </div>
+
+  <div class="wrap">
+    <div class="alert alert-flight">✈ &nbsp;KE791 departs Incheon 11:05 Wednesday — leave hotel by 08:30</div>
+  </div>
+
+  <div class="stops">
+    <div class="stop">
+      <div class="stop-num">1</div>
+      <div class="stop-body">
+        <div class="stop-time">10:00</div>
+        <div class="stop-name">Leeum Museum of Art</div>
+        <div class="stop-desc">World-class art museum</div>
+        <div class="stop-note">15 min walk downhill from Grand Hyatt. Allow 1.5 hours — focus on the Nouvel building (contemporary collection) which will hold Paloma's attention. Closed Mondays.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Leeum+Museum+of+Art&ll=37.538718,127.004485">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Leeum Museum,37.538718,127.004485">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">15 min<br>downhill</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">2</div>
+      <div class="stop-body">
+        <div class="stop-time">11:30</div>
+        <div class="stop-name">Gallery strip, Hannam-dong</div>
+        <div class="stop-desc">International galleries</div>
+        <div class="stop-note">Pace, Ropac, Lehmann Maupin — all within 10 min walk of Leeum. 30 min depending on what's showing.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Pace+Gallery+Seoul&ll=37.5385,127.0048">Pace — Apple</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Pace Gallery Seoul,37.5385,127.0048">Pace — Kakao</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">5–10 min</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">3</div>
+      <div class="stop-body">
+        <div class="stop-time">12:15</div>
+        <div class="stop-name">Café Onion, Seongsu</div>
+        <div class="stop-desc">Converted 1970s factory café</div>
+        <div class="stop-note">Lunch. Rooftop terrace, good bread and pastries. The building is the point — rusted doors, courtyards. Arrive before crowds build.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Cafe+Onion+Seongsu&ll=37.5447328,127.0582091">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Cafe Onion Seongsu,37.5447328,127.0582091">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-taxi">Taxi</span>
+        <span class="transport-detail">~20 min<br>~₩12,000</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">4</div>
+      <div class="stop-body">
+        <div class="stop-time">13:30</div>
+        <div class="stop-name">Common Ground + Seongsu streets</div>
+        <div class="stop-desc">Seoul's Nakameguro — thrift and indie brands</div>
+        <div class="stop-note">Cobalt shipping container market. The surrounding leather-workshop streets are the real find for Paloma — proper vintage, not curated. Allow 2 hours.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Common+Ground+Seoul&ll=37.5411513,127.0659498">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Common Ground Seoul,37.5411513,127.0659498">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-walk">Walk</span>
+        <span class="transport-detail">5 min from<br>Café Onion</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">5</div>
+      <div class="stop-body">
+        <div class="stop-time">15:45</div>
+        <div class="stop-name">Garosu-gil</div>
+        <div class="stop-desc">Tree-lined independent shopping street</div>
+        <div class="stop-note">Sinsa-dong. Better than Cheongdam for a wander — more independent, less corporate. Korean menswear and concept stores. Allow 1+ hour.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Garosu-gil+Sinsa-dong+Seoul&ll=37.5230,127.0211">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Garosu-gil,37.5230,127.0211">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-taxi">Taxi</span>
+        <span class="transport-detail">~20 min<br>~₩13,000</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">6</div>
+      <div class="stop-body">
+        <div class="stop-time">17:00</div>
+        <div class="stop-name">COEX Starfield Library</div>
+        <div class="stop-desc">That insane bookshop</div>
+        <div class="stop-note">5 min taxi from Garosu-gil. 13-metre shelves, genuinely spectacular. 30 min is enough. Optional — skip if you need more time in Garosu-gil.</div>
+        <div class="stop-maps">
+          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=COEX+Starfield+Library&ll=37.5111,127.0596">Apple Maps</a>
+          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/COEX Starfield Library,37.5111,127.0596">Kakao Maps</a>
+        </div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-taxi">Taxi</span>
+        <span class="transport-detail">5 min<br>~₩5,000</span>
+      </div>
+    </div>
+
+    <div class="stop">
+      <div class="stop-num">7</div>
+      <div class="stop-body">
+        <div class="stop-time">18:00+</div>
+        <div class="stop-name">Platoon office + dinner with Savannah</div>
+        <div class="stop-desc">Gangnam · restaurant TBC</div>
+        <div class="stop-note">Savannah booking the restaurant. Early night — flight next morning at 11:05.</div>
+      </div>
+      <div class="stop-transport">
+        <span class="badge badge-work">Work</span>
+        <span class="transport-detail">Gangnam</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-links">
+    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Leeum+Museum+Seoul&dirflg=w" target="_blank">↗ Tuesday route — Apple Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Leeum Museum,37.538718,127.004485" target="_blank">↗ Tuesday — Kakao Maps</a>
+  </div>
+</div>
+
+
+<!-- PRACTICAL -->
+<div class="practical">
+  <h3>Transport in Seoul</h3>
+  <p><strong>Kakao T</strong> (not KakaoTaxi — that's the old name) — download before you land. English mode available in settings. Works with a foreign Mastercard/Visa. Every taxi in this plan is under ₩20,000 (~£11).</p>
+  <p><strong>Uber</strong> also works in Seoul as a backup if Kakao T defeats you on day one.</p>
+  <p><strong>Airport → hotel</strong>: direct taxi recommended with luggage. ~₩80,000–90,000 from Incheon T2, ~70 min. Tell them Grand Hyatt Seoul, Hannam-dong (한남동).</p>
+  <p><strong>Kakao Maps</strong> — more accurate than Apple Maps for Seoul walking routes and transit. Worth having both.</p>
+</div>
+
+</body>
+</html>
