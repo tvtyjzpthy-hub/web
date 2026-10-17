@@ -84,20 +84,15 @@ a:visited { color: var(--walk); }
 /* STOP MAP LINKS */
 .stop-maps { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 .stop-map-link { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 3px; text-decoration: none; letter-spacing: 0.04em; border: 1px solid; }
-.sml-apple { color: var(--walk); border-color: var(--walk); background: transparent; }
-.sml-apple:visited { color: var(--walk); }
-.sml-kakao { color: #3A1D00; border-color: #CDB800; background: #FEF01B; }
-.sml-kakao:visited { color: #3A1D00; }
+.sml-apple { color: #4285F4; border-color: #4285F4; background: transparent; }
+.sml-apple:visited { color: #4285F4; }
 
 /* MAP LINKS */
 .map-links { max-width: 640px; margin: 14px auto 0; padding: 0 20px; display: flex; gap: 10px; }
 .map-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; }
-.map-btn-apple { color: var(--walk); }
-.map-btn-apple:visited { color: var(--walk); }
-.map-btn-apple:hover { background: #F0F7F4; }
-.map-btn-kakao { color: #3A1D00; border-color: #F9E000; background: #FEF01B; }
-.map-btn-kakao:hover { background: #F5E000; }
-.map-btn-kakao:visited { color: #3A1D00; }
+.map-btn-google { color: #4285F4; }
+.map-btn-google:visited { color: #4285F4; }
+.map-btn-google:hover { background: #EAF0FB; }
 
 /* RESORT CALLOUT */
 .resort-block { max-width: 640px; margin: 16px auto 0; padding: 0 20px; }
@@ -176,10 +171,7 @@ a:visited { color: var(--walk); }
         <div class="stop-name">Land Fukuoka · collect car</div>
         <div class="stop-desc">KE791 arrives Fukuoka Airport</div>
         <div class="stop-note">Car hire desk at airport — collection 13:30. Toyota Raize, automatic, insurance inclusive. Fuel up before returning.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Fukuoka+Airport&ll=33.5859,130.4511">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Fukuoka Airport,33.5859,130.4511">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.5859,130.4511" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-drive">Drive</span>
@@ -191,13 +183,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">2</div>
       <div class="stop-body">
         <div class="stop-time">~15:00</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Yufuin+Baien+Garden+Resort&ll=33.2620,131.3650">Yufuin Baien Garden Resort</a></div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.2620,131.3650">Yufuin Baien Garden Resort</a></div>
         <div class="stop-desc">3 nights · check-in 16:00</div>
         <div class="stop-note">Premium Kaiseki dinner included tonight. Bungo beef steak. Communal onsen. 2106-2 Kawakami, Yufuin-cho. Tel: 050-3528-2940.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Yufuin+Baien+Garden+Resort&ll=33.2620,131.3650">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Yufuin Baien Garden Resort,33.2620,131.3650">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.2620,131.3650" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-drive">Drive</span>
@@ -207,8 +196,8 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Fukuoka+Airport&daddr=Yufuin+Baien+Garden+Resort&dirflg=d" target="_blank">↗ Wednesday route — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Yufuin Baien Garden Resort,33.2620,131.3650" target="_blank">↗ Wednesday — Kakao Maps</a>
+    <a class="map-btn map-btn-google" href="https://maps.google.com/maps?saddr=Fukuoka+Airport&daddr=Yufuin+Baien+Garden+Resort" target="_blank">↗ Open in Google Maps</a>
+    
   </div>
 </div>
 
@@ -227,13 +216,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">1</div>
       <div class="stop-body">
         <div class="stop-time">Morning</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Beppu+Jigoku+Meguri&ll=33.2929,131.4989">Beppu — Jigoku Meguri</a></div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.2929,131.4989">Beppu — Jigoku Meguri</a></div>
         <div class="stop-desc">The hell pools</div>
         <div class="stop-note">Eight geothermal pools — vivid blues, reds, grey mud. Each dramatically different. Drive 45 min from Yufuin. Allow 2–3 hours to see the main ones. Umi Jigoku (cobalt blue) and Chi no Ike Jigoku (blood red) are the standouts.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Beppu+Jigoku&ll=33.2929,131.4989">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Beppu Jigoku,33.2929,131.4989">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.2929,131.4989" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-drive">Drive</span>
@@ -245,13 +231,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">2</div>
       <div class="stop-body">
         <div class="stop-time">Afternoon</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Beppu+Onsen&ll=33.2840,131.4910">Beppu town · onsen</div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.2840,131.4910">Beppu town · onsen</div>
         <div class="stop-desc">Steam city</div>
         <div class="stop-note">The whole city steams visibly — pipes and vents everywhere. Try a public onsen or the famous sand baths (sunahara) where you're buried in geothermally heated sand. Very Paloma. Drive back to resort for dinner.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Beppu&ll=33.2840,131.4910">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Beppu,33.2840,131.4910">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.2840,131.4910" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-walk">Walk</span>
@@ -269,8 +252,8 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Yufuin&daddr=Beppu+Jigoku&dirflg=d" target="_blank">↗ Thursday route — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Beppu Jigoku,33.2929,131.4989" target="_blank">↗ Thursday — Kakao Maps</a>
+    <a class="map-btn map-btn-google" href="https://maps.google.com/maps?saddr=Yufuin&daddr=Beppu+Jigoku" target="_blank">↗ Open in Google Maps</a>
+    
   </div>
 </div>
 
@@ -289,13 +272,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">1</div>
       <div class="stop-body">
         <div class="stop-time">Morning</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Kinrin+Lake+Yufuin&ll=33.2594,131.3720">Kinrin Lake</a></div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.2594,131.3720">Kinrin Lake</a></div>
         <div class="stop-desc">Misty morning lake</div>
         <div class="stop-note">10 min walk from the resort. Best in the early morning when geothermal mist sits on the water. Hot spring water feeds into it — steams year-round. Very atmospheric in October light.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Kinrin+Lake+Yufuin&ll=33.2594,131.3720">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Kinrin Lake Yufuin,33.2594,131.3720">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.2594,131.3720" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-walk">Walk</span>
@@ -307,13 +287,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">2</div>
       <div class="stop-body">
         <div class="stop-time">Mid-morning</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Yufuin+Floral+Village&ll=33.2608,131.3680">Yufuin town — galleries and shops</a></div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.2608,131.3680">Yufuin town — galleries and shops</a></div>
         <div class="stop-desc">The main street</div>
         <div class="stop-note">Yufuin-cho Yunotsubo Kaido — the main shopping street. Small galleries, craft pottery, local glass, decent food. Completely unhurried. Good for Paloma to browse. Much quieter than Kyoto equivalent.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Yufuin+Yunotsubo+Kaido&ll=33.2608,131.3680">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Yufuin Yunotsubo Kaido,33.2608,131.3680">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.2608,131.3680" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-walk">Walk</span>
@@ -337,8 +314,8 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?q=Yufuin+Kinrin+Lake&ll=33.2594,131.3720" target="_blank">↗ Friday — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/map/Kinrin Lake Yufuin,33.2594,131.3720" target="_blank">↗ Friday — Kakao Maps</a>
+    <a class="map-btn map-btn-google" href="https://maps.google.com/?q=33.2594,131.3720" target="_blank">↗ Open in Google Maps</a>
+    
   </div>
 </div>
 
@@ -375,13 +352,10 @@ a:visited { color: var(--walk); }
       <div class="stop-num">2</div>
       <div class="stop-body">
         <div class="stop-time">11:00</div>
-        <div class="stop-name"><a href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Return car · Hakata Station</a></div>
+        <div class="stop-name"><a href="https://maps.google.com/?q=33.5899,130.4208">Return car · Hakata Station</a></div>
         <div class="stop-desc">Hakata exit</div>
         <div class="stop-note">Return by 11:00 at the Hakata Railway Station Hakata exit. Fuel up within 5km first. One-way drop-off fee JPY 1,210 payable locally. Keep the fuel receipt.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Apple Maps</a>
-          <a class="stop-map-link sml-kakao" href="https://map.kakao.com/link/map/Hakata Station,33.5899,130.4208">Kakao Maps</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.5899,130.4208" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-drive">Drive</span>
@@ -396,9 +370,7 @@ a:visited { color: var(--walk); }
         <div class="stop-name">Shinkansen · Hakata → Tokyo</div>
         <div class="stop-desc">Nozomi · Standard class</div>
         <div class="stop-note">Hakata 13:36 → Tokyo Station 18:33. Mt Fuji on the right side heading east if clear. Park Hyatt check-in from 15:00 — rooms will be held.</div>
-        <div class="stop-maps">
-          <a class="stop-map-link sml-apple" href="https://maps.apple.com/?q=Hakata+Station&ll=33.5899,130.4208">Hakata Station</a>
-        </div>
+        <div class="stop-maps"><a class="stop-map-link sml-apple" href="https://maps.google.com/?q=33.5899,130.4208" style="background:#4285F4;border-color:#4285F4;color:#fff;">Google Maps</a></div>
       </div>
       <div class="stop-transport">
         <span class="badge badge-train">Train</span>
