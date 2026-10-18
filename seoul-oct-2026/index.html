@@ -127,6 +127,17 @@ a:visited { color: var(--walk); }
   .stop { grid-template-columns: 22px 1fr auto; gap: 0 10px; }
   .map-links { flex-direction: column; }
 }
+
+details.day-section { margin-bottom: 0; }
+details.day-section > summary { list-style: none; cursor: pointer; user-select: none; }
+details.day-section > summary::-webkit-details-marker { display: none; }
+.day-header-row { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; max-width: 640px; margin: 0 auto 20px; }
+.day-text {}
+.day-toggle { font-size: 22px; color: var(--muted); line-height: 1; transition: transform 0.2s; flex-shrink: 0; }
+details.day-section[open] .day-toggle { transform: rotate(180deg); }
+details.day-section:not([open]) { margin-bottom: 8px; }
+details.day-section:not([open]) summary { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 0; }
+
 </style>
 </head>
 <body>
@@ -162,11 +173,13 @@ a:visited { color: var(--walk); }
 
 
 <!-- ═══ SUNDAY ═══ -->
-<div class="day">
-  <div class="day-header wrap">
-    <div class="day-date">Sunday 18 Oct</div>
-    <div class="day-subtitle">Arrival day · afternoon out</div>
-  </div>
+<details class="day-section" open>
+<summary>
+<div class="day-header-row">
+  <div class="day-text"><div class="day-date">Sunday 18 Oct</div><div class="day-subtitle">Arrival day · afternoon out</div></div>
+  <div class="day-toggle">⌄</div>
+</div>
+</summary>
 
   <div class="wrap">
     <div class="arrival-card">
@@ -252,20 +265,23 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Leeum+Museum+Seoul&dirflg=w" target="_blank">↗ Sunday route — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/그랜드하얏트서울,37.5394,126.9975/to/리움미술관,37.5387,127.0045" target="_blank">↗ Sunday route — Kakao Maps</a>
+    <a class="map-btn map-btn-apple" href="https://www.google.com/maps/dir/37.5394,126.9975/37.5387,127.0045/37.5385,127.0048/37.5360,127.0030" target="_blank">↗ Sunday — full day Google Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/그랜드하얏트서울,37.5394,126.9975/to/리움미술관,37.5387,127.0045" target="_blank">↗ Sunday — Kakao Maps</a>
   </div>
 </div>
 
+</details>
 
 <!-- ═══ MONDAY ═══ -->
 <hr class="day-divider">
 
-<div class="day">
-  <div class="day-header wrap">
-    <div class="day-date">Monday 19 Oct</div>
-    <div class="day-subtitle">Palaces · Zaha Hadid · food market</div>
-  </div>
+<details class="day-section" open>
+<summary>
+<div class="day-header-row">
+  <div class="day-text"><div class="day-date">Monday 19 Oct</div><div class="day-subtitle">Palaces · Zaha Hadid · food market · Parc dinner</div></div>
+  <div class="day-toggle">⌄</div>
+</div>
+</summary>
 
   <div class="stops">
     <div class="stop">
@@ -380,20 +396,23 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Gyeongbokgung+Palace+Seoul&dirflg=d" target="_blank">↗ Monday route — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/경복궁,37.579617,126.977041/to/파크서울,37.5374,126.9997" target="_blank">↗ Monday route — Kakao Maps</a>
+    <a class="map-btn map-btn-apple" href="https://www.google.com/maps/dir/37.5394,126.9975/37.5796,126.977/37.5815,126.985/37.5869,126.982/37.567,126.9984/37.570,127.009/37.5374,126.9997" target="_blank">↗ Monday — full day Google Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/경복궁,37.579617,126.977041/to/파크서울,37.5374,126.9997" target="_blank">↗ Monday — Kakao Maps</a>
   </div>
 </div>
 
+</details>
 
 <!-- ═══ TUESDAY ═══ -->
 <hr class="day-divider">
 
-<div class="day">
-  <div class="day-header wrap">
-    <div class="day-date">Tuesday 20 Oct</div>
-    <div class="day-subtitle">Art · thrift · Gangnam · Savannah</div>
-  </div>
+<details class="day-section" open>
+<summary>
+<div class="day-header-row">
+  <div class="day-text"><div class="day-date">Tuesday 20 Oct</div><div class="day-subtitle">Art · thrift · Gangnam · Savannah</div></div>
+  <div class="day-toggle">⌄</div>
+</div>
+</summary>
 
   <div class="wrap">
     <div class="alert alert-flight">✈ &nbsp;KE791 departs Incheon 11:05 Wednesday — leave hotel by 08:30</div>
@@ -524,11 +543,12 @@ a:visited { color: var(--walk); }
   </div>
 
   <div class="map-links">
-    <a class="map-btn map-btn-apple" href="https://maps.apple.com/?saddr=Grand+Hyatt+Seoul&daddr=Leeum+Museum+Seoul&dirflg=w" target="_blank">↗ Tuesday route — Apple Maps</a>
-    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/리움미술관,37.538718,127.004485/to/코엑스,37.5111,127.0596" target="_blank">↗ Tuesday route — Kakao Maps</a>
+    <a class="map-btn map-btn-apple" href="https://www.google.com/maps/dir/37.5394,126.9975/37.5387,127.0045/37.5447,127.0582/37.5411,127.0659/37.5230,127.0211/37.5111,127.0596" target="_blank">↗ Tuesday — full day Google Maps</a>
+    <a class="map-btn map-btn-kakao" href="https://map.kakao.com/link/from/리움미술관,37.538718,127.004485/to/코엑스,37.5111,127.0596" target="_blank">↗ Tuesday — Kakao Maps</a>
   </div>
 </div>
 
+</details>
 
 <!-- PRACTICAL -->
 <div class="practical">
